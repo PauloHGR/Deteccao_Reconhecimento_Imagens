@@ -2,6 +2,8 @@ package upload;
 
 import java.io.File;
 
+import javax.swing.JOptionPane;
+
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfRect;
@@ -17,23 +19,22 @@ public class DetectionFace {
 	
 	static File file;
 	
-	public DetectionFace(File file) {
-		DetectionFace.file = file;
-	}
+	public DetectionFace() {}
 	
-	public static void main(String[] args) {
+	public void Extract(File file) {
 		
-		//System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
+		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
        /// String opencvpath = System.getProperty("user.dir") + "\\files\\";
         //String libPath = System.getProperty("java.library.path");
-        System.load("opencv_java341");
+        //System.load("opencv_java341");
         System.out.println("\nRunning FaceDetector");
-        Mat image = Imgcodecs.imread(file.getAbsolutePath());
-        CascadeClassifier faceDetector = new CascadeClassifier(DetectionFace.class.getResource("haarcascade_frontalface_alt.xml").getPath().substring(1));  
+        Mat image = Imgcodecs.imread(file.getPath());
+        CascadeClassifier faceDetector = new CascadeClassifier(System.getProperty("user.dir")+ "/haarcascade_frontalface_alt.xml");  
         MatOfRect faceDetections = new MatOfRect();
         faceDetector.detectMultiScale(image, faceDetections);
- 
-        System.out.println(String.format("Detected %s faces", faceDetections.toArray().length));
+        
+        JOptionPane.showMessageDialog(null,String.format("Detected %s faces", faceDetections.toArray().length));
+        //System.out.println(String.format("Detected %s faces", faceDetections.toArray().length));
  
         for (Rect rect : faceDetections.toArray()) {
             Imgproc.rectangle(image, new Point(rect.x, rect.y), new Point(rect.x + rect.width, rect.y + rect.height),
@@ -44,11 +45,6 @@ public class DetectionFace {
         System.out.println(String.format("Writing %s", filename));
         Imgcodecs.imwrite(filename, image);
 
-	}
-
-	public void setFile(File file) {
-		// TODO Auto-generated method stub
-		DetectionFace.file = file;
 	}
 
 }

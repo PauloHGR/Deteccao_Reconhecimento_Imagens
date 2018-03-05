@@ -98,8 +98,8 @@ public class UploadImage extends JFrame {
 			}
 			
 			if (e.getSource() == load) {
-				DetectionFace image = new DetectionFace(arquivo);
-				image.setFile(arquivo);
+				DetectionFace detection = new DetectionFace();
+				detection.Extract(arquivo);
 		        JOptionPane.showMessageDialog(null,"Imagem Carregada!");
 
 			}
