@@ -16,9 +16,19 @@ public class RecognitionFace {
 	
 	public RecognitionFace(){}
 
-	public void Recognition(File file, Mat image, MatOfRect faceDetections) {
+	public void Recognition(File file, Mat image, MatOfRect faceDetections, MatOfRect eyeRightDetections, MatOfRect eyeLeftDetections) {
 		// TODO Auto-generated method stub
 		for (Rect rect : faceDetections.toArray()) {
+            Imgproc.rectangle(image, new Point(rect.x, rect.y), new Point(rect.x + rect.width, rect.y + rect.height),
+                    new Scalar(0, 255, 0));
+        }
+		
+		for (Rect rect : eyeRightDetections.toArray()) {
+            Imgproc.rectangle(image, new Point(rect.x, rect.y), new Point(rect.x + rect.width, rect.y + rect.height),
+                    new Scalar(0, 255, 0));
+        }
+		
+		for (Rect rect : eyeLeftDetections.toArray()) {
             Imgproc.rectangle(image, new Point(rect.x, rect.y), new Point(rect.x + rect.width, rect.y + rect.height),
                     new Scalar(0, 255, 0));
         }
@@ -27,7 +37,7 @@ public class RecognitionFace {
         System.out.println(String.format("Writing %s", filename));
         Imgcodecs.imwrite(filename, image);
         
-        if (faceDetections.toArray().length >= 1) {
+        if (faceDetections.toArray().length >= 1 && eyeRightDetections.toArray().length >= 1 && eyeLeftDetections.toArray().length >= 1) {
             JOptionPane.showMessageDialog(null,String.format("FOTO!"));
 
         } else {
@@ -35,6 +45,4 @@ public class RecognitionFace {
 
         }
 	}
-	
-	
 }

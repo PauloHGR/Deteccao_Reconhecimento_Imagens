@@ -27,13 +27,22 @@ public class DetectionFace {
         Mat image = Imgcodecs.imread(file.getPath());
         CascadeClassifier faceDetector = new CascadeClassifier(System.getProperty("user.dir")+ "/haarcascade_frontalface_alt.xml");  
         MatOfRect faceDetections = new MatOfRect();
+        MatOfRect eyeRightDetections = new MatOfRect();
+        MatOfRect eyeLeftDetections = new MatOfRect();
         faceDetector.detectMultiScale(image, faceDetections);
         
         JOptionPane.showMessageDialog(null,String.format("Detected %s faces", faceDetections.toArray().length));
         //System.out.println(String.format("Detected %s faces", faceDetections.toArray().length));
  
+        CascadeClassifier eyeRightDetector = new CascadeClassifier(System.getProperty("user.dir")+ "/haarcascade_righteye_2splits.xml");
+        CascadeClassifier eyeLeftDetector = new CascadeClassifier(System.getProperty("user.dir")+ "/haarcascade_lefteye_2splits.xml");
+        eyeRightDetector.detectMultiScale(image, eyeRightDetections);
+        eyeLeftDetector.detectMultiScale(image, eyeLeftDetections);
+
+        
         RecognitionFace recognition = new RecognitionFace();
-		recognition.Recognition(file, image, faceDetections);
+		recognition.Recognition(file, image, faceDetections, eyeRightDetections, eyeLeftDetections);
+		
 
 	}
 
