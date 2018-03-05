@@ -9,7 +9,6 @@ import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -100,8 +99,6 @@ public class UploadImage extends JFrame {
 			if (e.getSource() == load) {
 				DetectionFace detection = new DetectionFace();
 				detection.Extract(arquivo);
-		        JOptionPane.showMessageDialog(null,"Imagem Carregada!");
-
 			}
 			
 			if (e.getSource() == cancel) {
